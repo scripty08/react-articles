@@ -1,0 +1,22 @@
+.card {
+    .headline {
+
+        padding: 5px;
+
+        .title {
+            max-width: 350px;
+            padding: 5px;
+        }
+
+        &.article {
+            height: 25px;
+            .extra {
+                padding: 0 8px
+            }
+        }
+    }
+
+    .content div {
+        border: 0;
+    }
+}
