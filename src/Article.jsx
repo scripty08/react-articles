@@ -1,20 +1,40 @@
 import React, {useState} from 'react';
 import { Card } from '@scripty/react-card';
 import { Form } from './Form';
-import './Styles.scss';
 
 export const Article = (props) => {
-    const {title, html, width, edit = false, onOkBtnClick, onCancelBtnClick, onChange, showEditBtn } = props;
+    const {
+        title = '',
+        html = '',
+        width,
+        edit = false,
+        onOkBtnClick = () => {},
+        onCancelBtnClick = () => {},
+        onEditBtnClick = () => {},
+        onDeleteBtnClick = () => {},
+        onChange = () => {},
+        showToolbar = false,
+        _id
+    } = props;
+
     const [editable, setEditable] = useState(edit);
+    let [article] = useState({ title, html, _id });
 
     const onOk = () => {
         setEditable(false);
-        onOkBtnClick();
+        onOkBtnClick(article)
     }
 
     const onCancel = () => {
         setEditable(false);
-        onCancelBtnClick();
+        onCancelBtnClick(article);
+    }
+
+    const onArticleChange = ({title, html, _id }) => {
+        article.title = title;
+        article.html = html;
+        article._id = _id;
+        onChange(article);
     }
 
     const EditableArticle = () => {
@@ -22,16 +42,19 @@ export const Article = (props) => {
         let cardConfig = {
             width: width,
             title: title,
-            headlineCls: 'headline article'
         }
 
         if (editable) {
-            return <Form {...props} onChange={onChange} onOkBtnClick={onOk} onCancelBtnClick={onCancel} />
+            return <Form {...props} onChange={onArticleChange} onOkBtnClick={onOk} onCancelBtnClick={onCancel} />
         }
 
-        if(showEditBtn) {
+        if(showToolbar) {
             cardConfig.onEdit = () => {
                 setEditable(true);
+                onEditBtnClick();
+            };
+            cardConfig.onDelete = () => {
+                onDeleteBtnClick();
             }
         }
 

@@ -4,7 +4,16 @@ import RichTextEditor from 'react-rte';
 import { Card } from '@scripty/react-card';
 
 export const Form = (props) => {
-    const { _id = '', html = '', title = '' , onChange = () => {}, width, onOkBtnClick, onCancelBtnClick} = props;
+    const {
+        _id = '',
+        html = '',
+        title = '' ,
+        onChange = () => {},
+        width,
+        onOkBtnClick,
+        onCancelBtnClick
+    } = props;
+
     const [articleValue, setArticleValue] = useState(RichTextEditor.createValueFromString(html, 'html'));
     const [titleValue, setTitleValue] = useState(title);
 
